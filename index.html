@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Código</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .code-container {
+            border: 1px solid #d1d1d1;
+            background-color: #fff;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #343a40;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .code-header h2 {
+            margin: 0;
+            color: #fff;
+        }
+
+        code {
+            display: block;
+            padding: 10px;
+            border-radius: 0 0 10px 10px;
+            overflow-x: auto;
+        }
+
+        button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="code-container">
+        <div class="code-header">
+            <h2>Código HTML</h2>
+            <button id="copy-button">Copiar</button>
+            <a id="download-button" download="codigo.html"><button>Descargar</button></a>
+        </div>
+        <code class="language-html">
+            &lt;!DOCTYPE html&gt;
+            &lt;html lang="es"&gt;
+            &lt;head&gt;
+                &lt;meta charset="UTF-8"&gt;
+                &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                &lt;title&gt;Mi Página&lt;/title&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+                &lt;h1&gt;Hola, mundo&lt;/h1&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+        </code>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.min.js"></script>
+    <script>
+        document.getElementById("copy-button").addEventListener("click", function() {
+            var codeElement = document.querySelector(".code-container code");
+            var range = document.createRange();
+            range.selectNode(codeElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("Código copiado al portapapeles");
+        });
+
+        document.getElementById("download-button").addEventListener("click", function() {
+            var codeContent = document.querySelector(".code-container code").textContent;
+            var blob = new Blob([codeContent], { type: "text/html" });
+            var url = URL.createObjectURL(blob);
+            this.href = url;
+        });
+
+        Prism.highlightAll();
+    </script>
+</body>
+</html>
